@@ -1,0 +1,23 @@
+BEGIN
+insert into history_pembelian(`no_po`, `tgl_po`, `nama_supplier`, `subtotal`, `diskon`, `hargatotal`, `sistem_bayar`, `tgl_lunas`, `username`, `tgl_transaksi`) values (OLD.no_po, OLD.tgl_po, OLD.nama_supplier, OLD.subtotal, OLD.diskon, OLD.hargatotal, OLD.sistem_bayar, OLD.tgl_lunas, OLD.username, OLD.tgl_transaksi);
+END
+
+BEGIN
+insert into history_pembelian_tools(`no_po`, `tgl_po`, `nama_supplier`, `subtotal`, `diskon`, `hargatotal`, `sistem_bayar`, `tgl_lunas`, `username`, `tgl_transaksi`) values (OLD.no_po, OLD.tgl_po, OLD.nama_supplier, OLD.subtotal, OLD.diskon, OLD.hargatotal, OLD.sistem_bayar, OLD.tgl_lunas, OLD.username, OLD.tgl_transaksi);
+END
+
+BEGIN
+insert into history_pembelian_detail(`line`,`no_tiket`,`no_polisi`,`nama_supplier`,`nama_barang`,`kualitas`,`no_po`,`tgl_po`,`nama_supir`,`berat_gross`,`berat_tare`,`berat_netto`,`jam_in`,`jam_out`,`tgl_in`,`tgl_out`,`harga_per_ton`,`total_harga`,`pembulatan`,`nominal_yg_dibayar`,`no_bapb`,`keterangan`,`sistem_bayar`,`no_tanda_terima`,`username`,`tgl_transaksi`) values (OLD.line, OLD.no_tiket, OLD.no_polisi, OLD.nama_supplier, OLD.nama_barang, OLD.kualitas, OLD.no_po, OLD.tgl_po, OLD.nama_supir, OLD.berat_gross, OLD.berat_tare, OLD.berat_netto, OLD.jam_in, OLD.jam_out, OLD.tgl_in, OLD.tgl_out, OLD.harga_per_ton, OLD.total_harga, OLD.pembulatan, OLD.nominal_yg_dibayar, OLD.no_bapb, OLD.keterangan, OLD.sistem_bayar, OLD.no_tanda_terima, OLD.username, OLD.tgl_transaksi);
+END
+
+BEGIN
+insert into history_pembelian_tools_detail(`line`,`nama_supplier`,`nama_barang`,`deskripsi`,`no_po`,`tgl_po`,`jumlah`,`satuan`,`harga_per_satuan`,`total_harga`,`pembulatan`,`nominal_yg_dibayar`,`no_bapb`,`keterangan`,`sistem_bayar`,`no_tanda_terima`,`pembulatan`,`nominal_yg_dibayar`,`username`,`tgl_transaksi`) values (OLD.line, OLD.nama_supplier, OLD.nama_barang, OLD.deskripsi, OLD.no_po, OLD.tgl_po, OLD.jumlah, OLD.satuan, OLD.harga_per_satuan, OLD.total_harga, OLD.pembulatan, OLD.nominal_yg_dibayar, OLD.no_bapb, OLD.keterangan, OLD.sistem_bayar, OLD.no_tanda_terima, OLD.username, OLD.tgl_transaksi);
+END
+
+BEGIN
+insert into history_penjualan(`no_penjualan`, `tgl_penjualan`, `nama_customer`, `subtotal`, `diskon`, `hargatotal`, `sistem_bayar`, `tgl_lunas`, `username`, `tgl_transaksi`) values (OLD.no_penjualan, OLD.tgl_penjualan, OLD.nama_customer, OLD.subtotal, OLD.diskon, OLD.hargatotal, OLD.sistem_bayar, OLD.tgl_lunas, OLD.username, OLD.tgl_transaksi);
+END
+
+BEGIN
+insert into history_penjualan_detail(`line`,`no_tiket`,`no_polisi`,`nama_customer`,`nama_barang`,`no_surat_jalan`,`no_penjualan`,`tgl_penjualan`,`nama_supir`,`berat_gross`,`berat_tare`,`berat_netto`,`kubikasi_p`,`kubikasi_l`,`kubikasi_t`,`kubikasi_vol`,`jam_in`,`jam_out`,`tgl_in`,`tgl_out`,`harga_per_ton`,`harga_per_mk`,`ongkir`,`total_harga`,`pembulatan`,`nominal_yg_dibayar`,`no_bapb`,`keterangan`,`sistem_bayar`,`no_nota_tunai`,`no_invoice`,`tgl_invoice`,`no_tanda_terima`,`username`,`tgl_transaksi`) values (OLD.line,OLD.no_tiket,OLD.no_polisi,OLD.nama_customer,OLD.nama_barang,OLD.no_surat_jalan,OLD.no_penjualan,OLD.tgl_penjualan,OLD.nama_supir,OLD.berat_gross,OLD.berat_tare,OLD.berat_netto,OLD.kubikasi_p,OLD.kubikasi_l,OLD.kubikasi_t,OLD.kubikasi_vol,OLD.jam_in,OLD.jam_out,OLD.tgl_in,OLD.tgl_out,OLD.harga_per_ton,OLD.harga_per_mk,OLD.ongkir,OLD.total_harga,OLD.pembulatan,OLD.nominal_yg_dibayar,OLD.no_bapb,OLD.keterangan,OLD.sistem_bayar,OLD.no_nota_tunai,OLD.no_invoice,OLD.tgl_invoice,OLD.no_tanda_terima,OLD.username,OLD.tgl_transaksi);
+END

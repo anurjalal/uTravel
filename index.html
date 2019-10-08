@@ -1,0 +1,372 @@
+<?php require_once 'ti.php' ?>
+<?php
+    if(!isset($_SESSION)) 
+    { 
+        session_start(); 
+    }
+	if(!isset($_SESSION['LOGIN_NAME']) || $_SESSION['ID_GROUP'] !='Administrator'){ // if session variable "username" does not exist.
+header("location:index.php?msg=Please%20login%20to%20access%20admin%20area%20!"); // Re-direct to index.php
+}
+else
+{
+	include_once "db.php";
+	//require 'koneksi.php';
+	error_reporting (E_ALL ^ E_NOTICE);
+?>
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+		<title>Sinar Rodamas</title>
+ 
+
+		<!-- BOOTSTRAP CSS (REQUIRED ALL PAGE)-->
+		<link href="assets/css/bootstrap.min.css" rel="stylesheet">
+		
+		<!-- PLUGINS CSS -->
+		<link href="assets/plugins/weather-icon/css/weather-icons.min.css" rel="stylesheet">
+		<link href="assets/plugins/prettify/prettify.min.css" rel="stylesheet">
+		<link href="assets/plugins/magnific-popup/magnific-popup.min.css" rel="stylesheet">
+		<link href="assets/plugins/owl-carousel/owl.carousel.min.css" rel="stylesheet">
+		<link href="assets/plugins/owl-carousel/owl.theme.min.css" rel="stylesheet">
+		<link href="assets/plugins/owl-carousel/owl.transitions.min.css" rel="stylesheet">
+		<link href="assets/plugins/chosen/chosen.min.css" rel="stylesheet">
+		<link href="assets/plugins/icheck/skins/all.css" rel="stylesheet">
+		<link href="assets/plugins/datepicker/datepicker.min.css" rel="stylesheet">
+		<link href="assets/plugins/timepicker/bootstrap-timepicker.min.css" rel="stylesheet">
+		<link href="assets/plugins/validator/bootstrapValidator.min.css" rel="stylesheet">
+		<link href="assets/plugins/summernote/summernote.min.css" rel="stylesheet">
+		<link href="assets/plugins/markdown/bootstrap-markdown.min.css" rel="stylesheet">
+		<link href="assets/plugins/datatable/css/bootstrap.datatable.min.css" rel="stylesheet">
+		<link href="assets/plugins/morris-chart/morris.min.css" rel="stylesheet">
+		<link href="assets/plugins/c3-chart/c3.min.css" rel="stylesheet">
+		<link href="assets/plugins/slider/slider.min.css" rel="stylesheet">
+		
+		<!-- MAIN CSS (REQUIRED ALL PAGE)-->
+		<link href="assets/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+		<link href="assets/css/style.css" rel="stylesheet">
+		<link href="assets/css/style-responsive.css" rel="stylesheet">
+ 
+		<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+		<!--[if lt IE 9]>
+		<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+		<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+		<![endif]-->
+	</head>
+ 
+	<body class="tooltips">
+		
+		
+		<!--
+		===========================================================
+		BEGIN PAGE
+		===========================================================
+		-->
+		<div class="wrapper">
+			<!-- BEGIN TOP NAV -->
+			<div class="top-navbar">
+				<div class="top-navbar-inner">
+					
+					<!-- Begin Logo brand -->
+					<div class="logo-brand">
+						<a href="admin.php"><img src="images/honda-logo.png" width="40px" height="50px" alt="Sinar Rodamas"></a>
+					</div><!-- /.logo-brand -->
+					<!-- End Logo brand -->
+					
+					<div class="top-nav-content">
+						
+						<!-- Begin button sidebar left toggle -->
+						<div class="btn-collapse-sidebar-left">
+							<i class="fa fa-bars icon-dinamic"></i>
+						</div><!-- /.btn-collapse-sidebar-left -->
+						<!-- End button sidebar left toggle -->
+						
+
+						
+						<!-- Begin button nav toggle -->
+						<div class="btn-collapse-nav" data-toggle="collapse" data-target="#main-fixed-nav">
+							<i class="fa fa-plus icon-plus"></i>
+						</div><!-- /.btn-collapse-sidebar-right -->
+						<!-- End button nav toggle -->
+						
+						
+						<!-- Begin user session nav -->
+						<ul class="nav-user navbar-right">
+							<li class="dropdown">
+							  <a href="logout.php" class="dropdown-toggle" data-toggle="dropdown">
+								<img src="images/logout.png" class="avatar img-circle" alt="Avatar">
+								Hi, <strong><?php echo $_SESSION['LOGIN_NAME']?></strong>
+							  </a>
+							</li>
+						</ul>
+						<!-- End user session nav -->
+						
+						<!-- Begin Collapse menu nav -->
+						<div class="collapse navbar-collapse" id="main-fixed-nav">
+
+						</div><!-- /.navbar-collapse -->
+						<!-- End Collapse menu nav -->
+					</div><!-- /.top-nav-content -->
+				</div><!-- /.top-navbar-inner -->
+			</div><!-- /.top-navbar -->
+			<!-- END TOP NAV -->
+			
+			
+			
+			<!-- BEGIN SIDEBAR LEFT -->
+			<div class="sidebar-left sidebar-nicescroller">
+				<ul class="sidebar-menu">
+					<li><a href="index.html"><i class="fa fa-dashboard icon-sidebar"></i>Dashboard</a></li>
+					<li>
+						<a href="#">
+							<i class="fa fa-bar-chart-o icon-sidebar"></i>
+							<i class="fa fa-angle-right chevron-icon-sidebar"></i>
+							Finance
+							</a>
+						<ul class="submenu">
+							<li><a href="masteringpembelian.php">Pembelian Motor</a></li>
+							<li><a href="masteringpembelianaksesoris.php">Pembelian Aksesoris</a></li>
+							<li><a href="masteringkwitansipiutang.php">Penerimaan Piutang Awal</a></li>
+							<li><a href="kwitansicustomerlist.php">Penerimaan Piutang Tempo</a></li>
+							<li><a href="kwitansiaksesorislist.php">Penerimaan Piutang Aksesoris</a></li>
+							<li><a href="kwitansileasinglist.php">Penerimaan Piutang Leasing</a></li>
+							<li><a href="masterkwitansipemasukan.php">Penerimaan Lain-Lain</a></li>
+							<li><a href="masteringbkuhutang.php">Pembayaran Hutang Awal</a></li>
+							<li><a href="masteringpengeluaranhutang.php">Pembayaran Hutang Dagang</a></li>
+							<li><a href="masteringbkubbn.php">Pembayaran Hutang BBN</a></li>
+							<li><a href="masteringreportbbn.php">Cetak Kuitansi BBN</a></li>
+							<li><a href="masteringpengeluarankomisi.php">Pembayaran Hutang Komisi</a></li>
+							<li><a href="masterbkupengeluaran.php">Pembayaran Lain-Lain</a></li>
+						</ul>
+					</li>
+					<li>
+						<a href="#">
+							<i class="fa fa-home icon-sidebar"></i>
+							<i class="fa fa-angle-right chevron-icon-sidebar"></i>
+							Warehouse
+							</a>
+						<ul class="submenu">
+							<li><a href="masteringshippinglist.php">Penerimaan Motor</a></li>
+							<li><a href="masteringshippinglistaksesoris.php">Penerimaan Aksesoris</a></li>
+							<li><a href="masteringstock.php">Stock Motor</a></li>
+							<li><a href="masteringstockaksesoris.php">Stock Aksesoris</a></li>
+						</ul>
+					</li>
+					<li>
+						<a href="#">
+							<i class="fa fa-shopping-cart icon-sidebar"></i>
+							<i class="fa fa-angle-right chevron-icon-sidebar"></i>
+							Sales
+							</a>
+						<ul class="submenu">
+							<li><a href="masteringspes.php">Surat Pesanan</a></li>
+							<li><a href="masteringpenjualan.php">Penjualan Motor</a></li>
+							<li><a href="masteringpenjualanaksesoris.php">Penjualan Aksesoris</a></li>
+						</ul>
+					</li>
+					<li>
+						<a href="#">
+							<i class="fa fa-folder-open icon-sidebar"></i>
+							<i class="fa fa-angle-right chevron-icon-sidebar"></i>
+							STNK/BPKB
+							</a>
+						<ul class="submenu">
+							<li><a href="monitoringstnk.php">Monitoring STNK</a></li>
+							<li><a href="monitoringbpkb.php">Monitoring BPKB</a></li>
+						</ul>
+					</li>
+					<li>
+						<a href="#">
+							<i class="fa fa-money icon-sidebar"></i>
+							<i class="fa fa-angle-right chevron-icon-sidebar"></i>
+							Accounting
+							</a>
+						<ul class="submenu">
+							<li><a href="masteringgroupbiaya.php">Group Accounting</a></li>
+							<li><a href="mastersubgroup.php">Sub Group Accounting</a></li>
+							<li><a href="mastertransaksi.php">Jurnal Transaksi</a></li>
+							<li><a href="add_penyesuaian.php">Jurnal Penyesuaian</a></li>
+							<li><a href="mastertutupbuku.php">Tutup Buku</a></li>
+							<li><a href="masterasetberwujud.php">Aset Berwujud</a></li>
+							<li><a href="masterasettidakberwujud.php">Aset Tidak Berwujud</a></li>
+							<li><a href="reschedule.php">Reschedule Hutang</a></li>
+							<li><a href="masterpembayaranppn.php">Monitoring PPN</a></li>
+							<li><a href="mastersaldoawalakutansi.php">Saldo Awal Accounting</a></li>
+							<li><a href="mastersaldoawalpersediaan.php">Saldo Awal Persediaan</a></li>
+							<li><a href="mastersaldoawalpiutang.php">Saldo Awal Piutang</a></li>
+							<li><a href="mastersaldoawalhutang.php">Saldo Awal Hutang</a></li>
+						</ul>
+					</li>
+					<li>
+						<a href="#">
+							<i class="fa fa-table icon-sidebar"></i>
+							<i class="fa fa-angle-right chevron-icon-sidebar"></i>
+							Mastering
+							</a>
+						<ul class="submenu">
+							<li><a href="masteringuser.php">User</a></li>
+							<li><a href="mastertipe.php">Tipe</a></li>
+							<li><a href="masteringwarna.php">Warna</a></li>
+							<li><a href="masterhargabeli.php">Harga Beli Motor</a></li>
+							<li><a href="masterhargajual.php">Harga Jual Motor</a></li>
+							<li><a href="masterbbn.php">Bea Balik Nama</a></li>
+							<li><a href="masteraksesoris.php">Aksesoris</a></li>
+							<li><a href="mastermerchandise.php">Merchandise</a></li>
+							<li><a href="mastersparepart.php">Spare Part</a></li>
+							<li><a href="masterhargabeliaksesoris.php">Harga Beli Aksesoris</a></li>
+							<li><a href="masterhargajualaksesoris.php">Harga Jual Aksesoris</a></li>
+							<li><a href="masteringnamasalesprogram.php">Nama Sales Program</a></li>
+							<li><a href="mastersalesprogram.php">Sales Program</a></li>
+							<li><a href="masteringsupplier.php">Supplier</a></li>
+							<li><a href="masteringsalesman.php">Staff</a></li>
+							<li><a href="masteringbroker.php">Broker</a></li>
+							<li><a href="masteringkustomer.php">Customer</a></li>
+							<li><a href="masteringleasing.php">Leasing</a></li>
+							<li><a href="masteringbirojasa.php">Biro Jasa</a></li>
+							<li><a href="masteringkelurahan.php">Wilayah</a></li>
+							<li><a href="masterdaerah.php">Daerah</a></li>
+							<li><a href="masteringstnk.php">STNK</a></li>
+						</ul>
+					</li>
+					<li>
+						<a href="#">
+							<i class="fa fa-file icon-sidebar"></i>
+							<i class="fa fa-angle-right chevron-icon-sidebar"></i>
+							Report
+							</a>
+						<ul class="submenu">
+							<li><a href="lappembelian.php">Pembelian</a></li>
+							<li><a href="lappenjualan.php">Penjualan</a></li>
+							<li><a href="lapkas.php">Kas/Bank</a></li>
+							<li><a href="lapstok.php">Stock</a></li>
+							<li><a href="lappiutangtempo.php">Piutang Tempo</a></li>
+							<li><a href="lappiutangkredit.php">Piutang Leasing</a></li>
+							<li><a href="lappiutangmutasi.php">Mutasi Piutang Leasing</a></li>
+							<li><a href="laphutangdealer.php">Hutang Dagang</a></li>
+							<li><a href="laphutangmutasi.php">Mutasi Hutang Dagang</a></li>
+							<li><a href="laphutangbbn.php">Hutang BBN</a></li>
+							<li><a href="laphutangkomisi.php">Hutang Komisi</a></li>
+							<li><a href="laplabarugi.php">Laba-Rugi</a></li>
+							<li><a href="lapneraca.php">Neraca</a></li>
+						</ul>
+					</li>					
+
+			</div><!-- /.sidebar-left -->
+			<!-- END SIDEBAR LEFT -->
+			
+			
+			
+
+			
+			
+			
+
+			
+			
+			
+			<!-- BEGIN PAGE CONTENT -->
+			<div class="page-content">
+				<div class="container-fluid">
+<?php startblock('konten') ?>
+<?php endblock() ?>
+				</div><!-- /.container-fluid -->
+				
+				
+				
+				<!-- BEGIN FOOTER -->
+				<footer>
+					&copy;<script language="JavaScript" type="text/javascript">
+							now = new Date
+							theYear=now.getYear()
+							if (theYear < 1900)
+								theYear=theYear+1900
+								document.write(theYear)
+						</script>
+						<a href="admin.php">Sinar Rodamas</a><br />
+				</footer>
+				<!-- END FOOTER -->
+				
+				
+			</div><!-- /.page-content -->
+		</div><!-- /.wrapper -->
+		<!-- END PAGE CONTENT -->
+		
+		
+	
+		
+		
+		
+		<!--
+		===========================================================
+		END PAGE
+		===========================================================
+		-->
+		
+		<!--
+		===========================================================
+		Placed at the end of the document so the pages load faster
+		===========================================================
+		-->
+		<!-- MAIN JAVASRCIPT (REQUIRED ALL PAGE)-->
+		<script src="assets/js/jquery.min.js"></script>
+		<script src="assets/js/bootstrap.min.js"></script>
+		<script src="assets/plugins/retina/retina.min.js"></script>
+		<script src="assets/plugins/nicescroll/jquery.nicescroll.js"></script>
+		<script src="assets/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+		<script src="assets/plugins/backstretch/jquery.backstretch.min.js"></script>
+ 
+		<!-- PLUGINS -->
+		<script src="assets/plugins/skycons/skycons.js"></script>
+		<script src="assets/plugins/prettify/prettify.js"></script>
+		<script src="assets/plugins/magnific-popup/jquery.magnific-popup.min.js"></script>
+		<script src="assets/plugins/owl-carousel/owl.carousel.min.js"></script>
+		<script src="assets/plugins/chosen/chosen.jquery.min.js"></script>
+		<script src="assets/plugins/icheck/icheck.min.js"></script>
+		<script src="assets/plugins/datepicker/bootstrap-datepicker.js"></script>
+		<script src="assets/plugins/timepicker/bootstrap-timepicker.js"></script>
+		<script src="assets/plugins/mask/jquery.mask.min.js"></script>
+		<script src="assets/plugins/validator/bootstrapValidator.min.js"></script>
+		<script src="assets/plugins/datatable/js/jquery.dataTables.min.js"></script>
+		<script src="assets/plugins/datatable/js/bootstrap.datatable.js"></script>
+		<script src="assets/plugins/summernote/summernote.min.js"></script>
+		<script src="assets/plugins/markdown/markdown.js"></script>
+		<script src="assets/plugins/markdown/to-markdown.js"></script>
+		<script src="assets/plugins/markdown/bootstrap-markdown.js"></script>
+		<script src="assets/plugins/slider/bootstrap-slider.js"></script>
+		
+		<!-- EASY PIE CHART JS -->
+		<script src="assets/plugins/easypie-chart/easypiechart.min.js"></script>
+		<script src="assets/plugins/easypie-chart/jquery.easypiechart.min.js"></script>
+		
+		<!-- KNOB JS -->
+		<!--[if IE]>
+		<script type="text/javascript" src="assets/plugins/jquery-knob/excanvas.js"></script>
+		<![endif]-->
+		<script src="assets/plugins/jquery-knob/jquery.knob.js"></script>
+		<script src="assets/plugins/jquery-knob/knob.js"></script>
+
+		<!-- FLOT CHART JS -->
+		<script src="assets/plugins/flot-chart/jquery.flot.js"></script>
+		<script src="assets/plugins/flot-chart/jquery.flot.tooltip.js"></script>
+		<script src="assets/plugins/flot-chart/jquery.flot.resize.js"></script>
+		<script src="assets/plugins/flot-chart/jquery.flot.selection.js"></script>
+		<script src="assets/plugins/flot-chart/jquery.flot.stack.js"></script>
+		<script src="assets/plugins/flot-chart/jquery.flot.time.js"></script>
+
+		<!-- MORRIS JS -->
+		<script src="assets/plugins/morris-chart/raphael.min.js"></script>
+		<script src="assets/plugins/morris-chart/morris.min.js"></script>
+		
+		<!-- C3 JS -->
+		<script src="assets/plugins/c3-chart/d3.v3.min.js" charset="utf-8"></script>
+		<script src="assets/plugins/c3-chart/c3.min.js"></script>
+		
+		<!-- MAIN APPS JS -->
+		<script src="assets/js/apps.js"></script>
+		
+	</body>
+</html>
+<?php
+}
+?>

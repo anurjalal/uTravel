@@ -1,0 +1,58 @@
+	<?php $tglsaldoawal = $db->queryUniqueValue("select max(tgl_terbentuk) from kassaldoawal");$tglsaldoawal=strtotime($tglsaldoawal);$tglsaldoawal=date('d-m-Y', $tglsaldoawal);?></td>
+	<?php $tglsekarang = date('d-m-Y');?>
+	<?php $diff = abs(strtotime($tglsekarang) - strtotime($tglsaldoawal)); $days = floor(($diff - $years * 365*60*60*24 - $months*30*60*60*24)/ (60*60*24));?>
+	<tr>
+		<td>&nbsp;</td>
+		<td>&nbsp;</td>
+	</tr>
+	<?php if($days>0) {?>
+	<form name="tutupsaldo" method="post" id="formtutupsaldo" action="">
+	<table>
+	<tr>
+		<td><strong>Apakah anda akan memulai saldo awal baru ?</td>
+	</tr>
+	</table>
+	<table>	
+	<tr>
+		<td><input type="submit" style="height:50px;width:100px;margin-left:20px" name="submit" value="Ya"></td>
+	</tr>
+	<?php } else {?>
+	<tr>
+		<td>&nbsp;</td>
+		<td>&nbsp;</td>
+	</tr>
+	<?php }?>
+	
+	
+	
+			if(isset($_POST['submit']))
+            {
+				$bln=date('m');
+				$tahun=date('Y');
+				$username = $_SESSION['LOGIN_NAME'];
+				$tglsaldoawal = $db->queryUniqueValue("select max(tgl_terbentuk) from kassaldoawal");$tglsaldoawal=strtotime($tglsaldoawal);$tglsaldoawal=date('Y-m-d', $tglsaldoawal);
+				$kassaldoawal = $db->queryUniqueValue("SELECT max(saldo_awal) FROM kassaldoawal where tgl_terbentuk between CONCAT_WS(' ', DATE('$tglsaldoawal'), '00:00:00') and CONCAT_WS(' ', DATE('$tglsaldoawal'), '23:59:59')");
+				$mutasikas = $db->queryUniqueValue("select sum(debit) - sum(kredit) from kas where tgl_transaksi between CONCAT_WS(' ', DATE('$tglsaldoawal'), '00:00:00') and CONCAT_WS(' ', DATE('$tglsaldoawal'), '23:59:59')");
+				$kassaldoakhir = $kassaldoawal+$mutasikas;
+				$kasakhir = $db->query("INSERT INTO kasakhir(saldo_akhir,tgl_terbentuk) values('$kassaldoakhir',NOW())");
+				$insertkasawal = $db->query("insert into kassaldoawal(saldo_awal,tgl_terbentuk,bln,tahun,username) values('$kassaldoakhir',NOW(),'$bln','$tahun','$username')");
+				$persediaansaldoawal = $db->queryUniqueValue("SELECT max(saldo_awal) FROM persediaansaldoawal where tgl_terbentuk between CONCAT_WS(' ', DATE('$tglsaldoawal'), '00:00:00') and CONCAT_WS(' ', DATE('$tglsaldoawal'), '23:59:59')");
+				$mutasipersediaan = $db->queryUniqueValue("select sum(debit) - sum(kredit) from persediaan where tgl_transaksi between CONCAT_WS(' ', DATE('$tglsaldoawal'), '00:00:00') and CONCAT_WS(' ', DATE('$tglsaldoawal'), '23:59:59')");
+				$persediaansaldoakhir = $persediaansaldoawal+$mutasipersediaan;
+				$persediaanakhir = $db->query("INSERT INTO persediaanakhir(saldo_akhir,tgl_terbentuk) values('$persediaansaldoakhir',NOW())");
+				$insertpersediaanawal = $db->query("insert into persediaansaldoawal(saldo_awal,tgl_terbentuk,bln,tahun,username) values('$persediaansaldoakhir',NOW(),'$bln','$tahun','$username')");
+				$piutangsaldoawal = $db->queryUniqueValue("SELECT max(saldo_awal) FROM piutangsaldoawal where tgl_terbentuk between CONCAT_WS(' ', DATE('$tglsaldoawal'), '00:00:00') and CONCAT_WS(' ', DATE('$tglsaldoawal'), '23:59:59')");
+				$mutasipiutang = $db->queryUniqueValue("select sum(debit) - sum(kredit) from piutang where tgl_transaksi between CONCAT_WS(' ', DATE('$tglsaldoawal'), '00:00:00') and CONCAT_WS(' ', DATE('$tglsaldoawal'), '23:59:59')");
+				$piutangsaldoakhir = $piutangsaldoawal+$mutasipiutang;
+				$piutangakhir = $db->query("INSERT INTO piutangakhir(saldo_akhir,tgl_terbentuk) values('$piutangsaldoakhir',NOW())");
+				$insertpiutangawal = $db->query("insert into piutangsaldoawal(saldo_awal,tgl_terbentuk,bln,tahun,username) values('$piutangsaldoakhir',NOW(),'$bln','$tahun','$username')");
+				$hutangsaldoawal = $db->queryUniqueValue("SELECT max(saldo_awal) FROM hutangsaldoawal where tgl_terbentuk between CONCAT_WS(' ', DATE('$tglsaldoawal'), '00:00:00') and CONCAT_WS(' ', DATE('$tglsaldoawal'), '23:59:59')");
+				$mutasihutang = $db->queryUniqueValue("select sum(debit) - sum(kredit) from hutang where tgl_transaksi between CONCAT_WS(' ', DATE('$tglsaldoawal'), '00:00:00') and CONCAT_WS(' ', DATE('$tglsaldoawal'), '23:59:59')");
+				$hutangsaldoakhir = $hutangsaldoawal+$mutasihutang;
+				$hutangakhir = $db->query("INSERT INTO hutangakhir(saldo_akhir,tgl_terbentuk) values('$hutangsaldoakhir',NOW())");
+				$inserthutangawal = $db->query("insert into hutangsaldoawal(saldo_awal,tgl_terbentuk,bln,tahun,username) values('$hutangsaldoakhir',NOW(),'$bln','$tahun','$username')");
+				if($inserthutangawal)
+				{
+				echo "<div style='background-color:yellow;'><br><font color=green size=+1 >Transfer saldo akhir ke saldo awal hari ini berhasil</font></div> ";
+				}
+			}
